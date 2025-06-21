@@ -78,40 +78,48 @@ export const TrendChart: React.FC<TrendChartProps> = ({
 
   if (data.length === 0 || data.every(item => item.amount === 0)) {
     return (
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+      <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           Xu hướng chi tiêu
         </h3>
         <div className="flex items-center justify-center h-64">
-          <p className="text-gray-500">Không có dữ liệu để hiển thị</p>
+          <p className="text-gray-500 dark:text-gray-400">Không có dữ liệu để hiển thị</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">
+    <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
         Xu hướng chi tiêu
       </h3>
       <div className="h-80">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
             <XAxis 
               dataKey="date" 
               angle={-45}
               textAnchor="end"
               height={80}
               fontSize={12}
+              stroke="var(--chart-text)"
             />
             <YAxis 
               tickFormatter={(value) => formatCurrency(value).replace('₫', '').trim()}
               fontSize={12}
+              stroke="var(--chart-text)"
             />
             <Tooltip 
               formatter={(value) => [formatCurrency(value as number), 'Chi tiêu']}
-              labelStyle={{ color: '#374151' }}
+              labelStyle={{ color: 'var(--tooltip-text)' }}
+              contentStyle={{
+                backgroundColor: 'var(--tooltip-bg)',
+                border: '1px solid var(--tooltip-border)',
+                borderRadius: '8px',
+                color: 'var(--tooltip-text)'
+              }}
             />
             <Line 
               type="monotone" 

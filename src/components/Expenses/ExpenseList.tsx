@@ -31,7 +31,7 @@ export const ExpenseList: React.FC<ExpenseListProps> = ({
   if (expenses.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500">Chưa có chi tiêu nào được ghi nhận</p>
+        <p className="text-gray-500 dark:text-gray-400">Chưa có chi tiêu nào được ghi nhận</p>
       </div>
     );
   }
@@ -45,27 +45,27 @@ export const ExpenseList: React.FC<ExpenseListProps> = ({
       {sortedExpenses.map((expense) => (
         <div
           key={expense.id}
-          className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+          className="flex items-center justify-between p-3 sm:p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
         >
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <div className="flex items-center space-x-3 mb-2">
               <div
-                className="w-3 h-3 rounded-full"
+                className="w-3 h-3 rounded-full flex-shrink-0"
                 style={{ backgroundColor: getCategoryColor(expense.categoryId) }}
               />
-              <h3 className="font-medium text-gray-900">{expense.description}</h3>
+              <h3 className="font-medium text-gray-900 dark:text-white truncate">{expense.description}</h3>
               {expense.isRecurring && (
-                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800">
+                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 flex-shrink-0">
                   <Repeat size={12} className="mr-1" />
                   Định kỳ
                 </span>
               )}
             </div>
             
-            <div className="flex items-center space-x-4 text-sm text-gray-600">
+            <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400 flex-wrap gap-y-1">
               <div className="flex items-center space-x-1">
                 <Tag size={14} />
-                <span>{getCategoryName(expense.categoryId)}</span>
+                <span className="truncate">{getCategoryName(expense.categoryId)}</span>
               </div>
               <div className="flex items-center space-x-1">
                 <Calendar size={14} />
@@ -74,17 +74,17 @@ export const ExpenseList: React.FC<ExpenseListProps> = ({
             </div>
             
             {expense.notes && (
-              <p className="text-sm text-gray-500 mt-1">{expense.notes}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 truncate">{expense.notes}</p>
             )}
           </div>
           
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 flex-shrink-0 ml-3">
             <div className="text-right">
-              <div className="font-semibold text-lg text-gray-900">
+              <div className="font-semibold text-lg text-gray-900 dark:text-white">
                 {formatCurrency(expense.amount)}
               </div>
               {expense.isRecurring && (
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-gray-500 dark:text-gray-400">
                   {expense.recurringType === 'daily' && 'Hàng ngày'}
                   {expense.recurringType === 'weekly' && 'Hàng tuần'}
                   {expense.recurringType === 'monthly' && 'Hàng tháng'}
@@ -95,13 +95,13 @@ export const ExpenseList: React.FC<ExpenseListProps> = ({
             <div className="flex space-x-1">
               <button
                 onClick={() => onEdit(expense)}
-                className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                className="p-2 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors touch-manipulation"
               >
                 <Edit2 size={16} />
               </button>
               <button
                 onClick={() => onDelete(expense.id)}
-                className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                className="p-2 text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors touch-manipulation"
               >
                 <Trash2 size={16} />
               </button>

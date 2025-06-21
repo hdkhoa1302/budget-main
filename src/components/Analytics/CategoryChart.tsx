@@ -61,12 +61,12 @@ export const CategoryChart: React.FC<CategoryChartProps> = ({
 
   if (data.length === 0) {
     return (
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+      <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           Phân bổ chi tiêu theo danh mục
         </h3>
         <div className="flex items-center justify-center h-64">
-          <p className="text-gray-500">Không có dữ liệu để hiển thị</p>
+          <p className="text-gray-500 dark:text-gray-400">Không có dữ liệu để hiển thị</p>
         </div>
       </div>
     );
@@ -78,8 +78,8 @@ export const CategoryChart: React.FC<CategoryChartProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">
+    <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
         Phân bổ chi tiêu theo danh mục
       </h3>
       <div className="h-80">
@@ -102,6 +102,12 @@ export const CategoryChart: React.FC<CategoryChartProps> = ({
             <Tooltip 
               formatter={(value) => formatCurrency(value as number)}
               labelFormatter={(label) => `${data.find(d => d.name === label)?.icon} ${label}`}
+              contentStyle={{
+                backgroundColor: 'var(--tooltip-bg)',
+                border: '1px solid var(--tooltip-border)',
+                borderRadius: '8px',
+                color: 'var(--tooltip-text)'
+              }}
             />
             <Legend 
               formatter={(value) => {

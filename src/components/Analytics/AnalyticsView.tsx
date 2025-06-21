@@ -17,12 +17,12 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-900">Phân tích chi tiêu</h2>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Phân tích chi tiêu</h2>
         <select
           value={selectedPeriod}
           onChange={(e) => setSelectedPeriod(e.target.value as 'month' | 'quarter' | 'year')}
-          className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
         >
           <option value="month">Tháng này</option>
           <option value="quarter">Quý này</option>

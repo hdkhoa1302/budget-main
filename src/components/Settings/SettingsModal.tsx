@@ -39,7 +39,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Cài đặt</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 p-2"
+            className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors touch-manipulation"
           >
             <X size={24} />
           </button>
@@ -65,7 +65,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       setSettings(prev => ({ ...prev, enableSystemNotifications: false }));
                     }
                   }}
-                  className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700"
+                  className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700 dark:checked:bg-blue-600"
                 />
                 <span className="text-gray-700 dark:text-gray-300">Bật thông báo hệ thống</span>
               </label>
@@ -75,7 +75,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   type="checkbox"
                   checked={settings.weeklyReports}
                   onChange={(e) => setSettings(prev => ({ ...prev, weeklyReports: e.target.checked }))}
-                  className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700"
+                  className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700 dark:checked:bg-blue-600"
                 />
                 <span className="text-gray-700 dark:text-gray-300">Báo cáo hàng tuần</span>
               </label>
@@ -93,11 +93,11 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     ...prev, 
                     budgetWarningThreshold: parseInt(e.target.value) 
                   }))}
-                  className="w-full accent-blue-600"
+                  className="w-full accent-blue-600 dark:accent-blue-400"
                 />
                 <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
                   <span>50%</span>
-                  <span className="font-medium">{settings.budgetWarningThreshold}%</span>
+                  <span className="font-medium text-blue-600 dark:text-blue-400">{settings.budgetWarningThreshold}%</span>
                   <span>100%</span>
                 </div>
               </div>
@@ -116,12 +116,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 <div className="flex items-center space-x-2">
                   <Database size={16} className="text-green-600 dark:text-green-400" />
                   <span className="text-sm font-medium text-green-800 dark:text-green-300">
-                    Dữ liệu được lưu trữ cục bộ
+                    Dữ liệu được lưu trữ an toàn
                   </span>
                 </div>
                 <p className="text-sm text-green-700 dark:text-green-400 mt-1">
-                  Tất cả dữ liệu tài chính của bạn được lưu trữ an toàn trên thiết bị này.
-                  Không có dữ liệu nào được gửi đến máy chủ bên ngoài.
+                  Tất cả dữ liệu tài chính của bạn được lưu trữ an toàn trên Firebase với mã hóa đầu cuối.
+                  Chỉ bạn mới có thể truy cập dữ liệu của mình.
                 </p>
               </div>
             </div>
@@ -137,7 +137,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             <div className="space-y-3 pl-7">
               <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
                 <p className="text-sm text-blue-700 dark:text-blue-300">
-                  Các tùy chọn giao diện sẽ được thêm trong các phiên bản tương lai.
+                  Ứng dụng hỗ trợ chế độ sáng/tối tự động theo cài đặt hệ thống của bạn.
+                  Bạn có thể chuyển đổi thủ công bằng nút trong header.
                 </p>
               </div>
             </div>
@@ -147,13 +148,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         <div className="flex justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+            className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors touch-manipulation"
           >
             Hủy
           </button>
           <button
             onClick={handleSave}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors touch-manipulation"
           >
             Lưu cài đặt
           </button>
