@@ -9,11 +9,12 @@ import { AnalyticsView } from './components/Analytics/AnalyticsView';
 import { ReportsView } from './components/Reports/ReportsView';
 import { SettingsModal } from './components/Settings/SettingsModal';
 import { AIAssistant } from './components/AI/AIAssistant';
+import { ThemeProvider } from './contexts/ThemeContext';
 import { Budget, Expense, AlertSettings, Debt, DebtParticipant, DebtPayment } from './types';
 import { storageUtils } from './utils/storage';
 import { notificationUtils } from './utils/notifications';
 
-function App() {
+function AppContent() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -429,7 +430,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       <Header
         onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
         onSettingsClick={() => setSettingsOpen(true)}
@@ -445,8 +446,10 @@ function App() {
           onTabChange={setActiveTab}
         />
         
-        <main className="flex-1 p-6 lg:ml-0">
-          {renderContent()}
+        <main className="flex-1 p-4 lg:p-8 lg:ml-0">
+          <div className="max-w-7xl mx-auto">
+            {renderContent()}
+          </div>
         </main>
       </div>
 
@@ -463,6 +466,14 @@ function App() {
         debts={debts}
       />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 
