@@ -69,21 +69,21 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-900">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
           {expense ? 'Chỉnh sửa chi tiêu' : 'Thêm chi tiêu mới'}
         </h2>
         <button
           onClick={onCancel}
-          className="text-gray-500 hover:text-gray-700 p-2"
+          className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 p-2"
         >
           <X size={24} />
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 space-y-6">
+      <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Số tiền <span className="text-red-500">*</span>
             </label>
             <input
@@ -91,8 +91,8 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({
               step="0.01"
               value={formData.amount}
               onChange={(e) => updateField('amount', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.amount ? 'border-red-500' : 'border-gray-300'
+              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${
+                errors.amount ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
               }`}
               placeholder="0"
             />
@@ -100,14 +100,14 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Danh mục <span className="text-red-500">*</span>
             </label>
             <select
               value={formData.categoryId}
               onChange={(e) => updateField('categoryId', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.categoryId ? 'border-red-500' : 'border-gray-300'
+              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${
+                errors.categoryId ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
               }`}
             >
               <option value="">Chọn danh mục</option>
@@ -122,15 +122,15 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Mô tả <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
             value={formData.description}
             onChange={(e) => updateField('description', e.target.value)}
-            className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              errors.description ? 'border-red-500' : 'border-gray-300'
+            className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${
+              errors.description ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
             }`}
             placeholder="Nhập mô tả chi tiêu"
           />
@@ -138,15 +138,15 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Ngày <span className="text-red-500">*</span>
           </label>
           <input
             type="date"
             value={formData.date}
             onChange={(e) => updateField('date', e.target.value)}
-            className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              errors.date ? 'border-red-500' : 'border-gray-300'
+            className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${
+              errors.date ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
             }`}
           />
           {errors.date && <p className="text-red-500 text-sm mt-1">{errors.date}</p>}
@@ -158,21 +158,21 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({
               type="checkbox"
               checked={formData.isRecurring}
               onChange={(e) => updateField('isRecurring', e.target.checked)}
-              className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700"
             />
-            <span className="text-sm font-medium text-gray-700">Chi tiêu định kỳ</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Chi tiêu định kỳ</span>
           </label>
         </div>
 
         {formData.isRecurring && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Tần suất
             </label>
             <select
               value={formData.recurringType}
               onChange={(e) => updateField('recurringType', e.target.value as 'daily' | 'weekly' | 'monthly')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             >
               <option value="daily">Hàng ngày</option>
               <option value="weekly">Hàng tuần</option>
@@ -182,14 +182,14 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({
         )}
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Ghi chú
           </label>
           <textarea
             value={formData.notes || ''}
             onChange={(e) => updateField('notes', e.target.value)}
             rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
             placeholder="Thêm ghi chú (không bắt buộc)"
           />
         </div>
@@ -198,7 +198,7 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+            className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
           >
             Hủy
           </button>

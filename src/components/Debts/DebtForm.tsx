@@ -141,21 +141,21 @@ export const DebtForm: React.FC<DebtFormProps> = ({
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-900">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
           {debt ? 'Chỉnh sửa khoản vay nợ' : 'Thêm khoản vay nợ mới'}
         </h2>
         <button
           onClick={onCancel}
-          className="text-gray-500 hover:text-gray-700 p-2"
+          className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 p-2"
         >
           <X size={24} />
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 space-y-6">
+      <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700 space-y-6">
         {/* Debt Type Selection */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-3">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
             Loại giao dịch <span className="text-red-500">*</span>
           </label>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -166,13 +166,13 @@ export const DebtForm: React.FC<DebtFormProps> = ({
                 onClick={() => updateField('type', type.value)}
                 className={`p-4 border-2 rounded-lg text-left transition-colors ${
                   formData.type === type.value
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
+                    : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 bg-white dark:bg-gray-700'
                 }`}
               >
                 <div className="flex items-center space-x-3">
                   <span className="text-2xl">{type.icon}</span>
-                  <span className="font-medium">{type.label}</span>
+                  <span className="font-medium text-gray-900 dark:text-white">{type.label}</span>
                 </div>
               </button>
             ))}
@@ -182,15 +182,15 @@ export const DebtForm: React.FC<DebtFormProps> = ({
         {/* Basic Information */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Tiêu đề <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => updateField('title', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.title ? 'border-red-500' : 'border-gray-300'
+              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${
+                errors.title ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
               }`}
               placeholder="Nhập tiêu đề"
             />
@@ -198,7 +198,7 @@ export const DebtForm: React.FC<DebtFormProps> = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Tổng số tiền <span className="text-red-500">*</span>
             </label>
             <input
@@ -206,8 +206,8 @@ export const DebtForm: React.FC<DebtFormProps> = ({
               step="0.01"
               value={formData.totalAmount}
               onChange={(e) => updateField('totalAmount', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.totalAmount ? 'border-red-500' : 'border-gray-300'
+              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${
+                errors.totalAmount ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
               }`}
               placeholder="0"
             />
@@ -216,14 +216,14 @@ export const DebtForm: React.FC<DebtFormProps> = ({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Mô tả
           </label>
           <textarea
             value={formData.description || ''}
             onChange={(e) => updateField('description', e.target.value)}
             rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
             placeholder="Mô tả chi tiết về khoản vay nợ"
           />
         </div>
@@ -231,29 +231,29 @@ export const DebtForm: React.FC<DebtFormProps> = ({
         {/* Date Information */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Ngày tạo <span className="text-red-500">*</span>
             </label>
             <input
               type="date"
               value={formData.date}
               onChange={(e) => updateField('date', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.date ? 'border-red-500' : 'border-gray-300'
+              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${
+                errors.date ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
               }`}
             />
             {errors.date && <p className="text-red-500 text-sm mt-1">{errors.date}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Ngày đến hạn
             </label>
             <input
               type="date"
               value={formData.dueDate || ''}
               onChange={(e) => updateField('dueDate', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             />
           </div>
         </div>
@@ -261,15 +261,15 @@ export const DebtForm: React.FC<DebtFormProps> = ({
         {/* Participant Selection */}
         {!isGroupType ? (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Người tham gia <span className="text-red-500">*</span>
             </label>
             <div className="flex space-x-2">
               <select
                 value={formData.participantId || ''}
                 onChange={(e) => updateField('participantId', e.target.value)}
-                className={`flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  errors.participantId ? 'border-red-500' : 'border-gray-300'
+                className={`flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${
+                  errors.participantId ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                 }`}
               >
                 <option value="">Chọn người tham gia</option>
@@ -282,7 +282,7 @@ export const DebtForm: React.FC<DebtFormProps> = ({
               <button
                 type="button"
                 onClick={() => setShowNewParticipant(true)}
-                className="px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+                className="px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
               >
                 <Plus size={16} />
               </button>
@@ -292,13 +292,13 @@ export const DebtForm: React.FC<DebtFormProps> = ({
         ) : (
           <div>
             <div className="flex justify-between items-center mb-3">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Người tham gia <span className="text-red-500">*</span>
               </label>
               <button
                 type="button"
                 onClick={() => setShowNewParticipant(true)}
-                className="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm flex items-center space-x-1"
+                className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors text-sm flex items-center space-x-1"
               >
                 <Plus size={14} />
                 <span>Thêm người mới</span>
@@ -313,16 +313,16 @@ export const DebtForm: React.FC<DebtFormProps> = ({
                   onClick={() => toggleParticipant(participant)}
                   className={`p-3 border-2 rounded-lg text-left transition-colors ${
                     formData.participants?.some(p => p.id === participant.id)
-                      ? 'border-blue-500 bg-blue-50 text-blue-700'
-                      : 'border-gray-200 hover:border-gray-300'
+                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
+                      : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 bg-white dark:bg-gray-700'
                   }`}
                 >
                   <div className="flex items-center space-x-2">
                     <User size={16} />
-                    <span className="font-medium">{participant.name}</span>
+                    <span className="font-medium text-gray-900 dark:text-white">{participant.name}</span>
                   </div>
                   {participant.email && (
-                    <p className="text-xs text-gray-500 mt-1">{participant.email}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{participant.email}</p>
                   )}
                 </button>
               ))}
@@ -331,8 +331,8 @@ export const DebtForm: React.FC<DebtFormProps> = ({
 
             {/* Split Configuration */}
             {formData.participants && formData.participants.length > 0 && (
-              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                <h4 className="font-medium text-gray-900 mb-3">Cách chia tiền</h4>
+              <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <h4 className="font-medium text-gray-900 dark:text-white mb-3">Cách chia tiền</h4>
                 
                 <div className="flex space-x-4 mb-4">
                   <label className="flex items-center space-x-2">
@@ -341,9 +341,9 @@ export const DebtForm: React.FC<DebtFormProps> = ({
                       value="equal"
                       checked={formData.splitType === 'equal'}
                       onChange={(e) => updateField('splitType', e.target.value)}
-                      className="text-blue-600 focus:ring-blue-500"
+                      className="text-blue-600 focus:ring-blue-500 dark:bg-gray-600"
                     />
-                    <span>Chia đều</span>
+                    <span className="text-gray-700 dark:text-gray-300">Chia đều</span>
                   </label>
                   <label className="flex items-center space-x-2">
                     <input
@@ -351,9 +351,9 @@ export const DebtForm: React.FC<DebtFormProps> = ({
                       value="custom"
                       checked={formData.splitType === 'custom'}
                       onChange={(e) => updateField('splitType', e.target.value)}
-                      className="text-blue-600 focus:ring-blue-500"
+                      className="text-blue-600 focus:ring-blue-500 dark:bg-gray-600"
                     />
-                    <span>Chia tùy chỉnh</span>
+                    <span className="text-gray-700 dark:text-gray-300">Chia tùy chỉnh</span>
                   </label>
                 </div>
 
@@ -364,19 +364,19 @@ export const DebtForm: React.FC<DebtFormProps> = ({
                       : parseFloat(formData.customSplits?.find(s => s.participantId === participant.id)?.amount || '0');
 
                     return (
-                      <div key={participant.id} className="flex items-center justify-between p-3 bg-white rounded border">
-                        <span className="font-medium">{participant.name}</span>
+                      <div key={participant.id} className="flex items-center justify-between p-3 bg-white dark:bg-gray-600 rounded border border-gray-200 dark:border-gray-500">
+                        <span className="font-medium text-gray-900 dark:text-white">{participant.name}</span>
                         {formData.splitType === 'custom' ? (
                           <input
                             type="number"
                             step="0.01"
                             value={formData.customSplits?.find(s => s.participantId === participant.id)?.amount || ''}
                             onChange={(e) => updateCustomSplit(participant.id, e.target.value)}
-                            className="w-24 px-2 py-1 border border-gray-300 rounded text-right"
+                            className="w-24 px-2 py-1 border border-gray-300 dark:border-gray-500 rounded text-right bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                             placeholder="0"
                           />
                         ) : (
-                          <span className="font-semibold text-blue-600">
+                          <span className="font-semibold text-blue-600 dark:text-blue-400">
                             {splitAmount.toLocaleString('vi-VN')} ₫
                           </span>
                         )}
@@ -386,16 +386,16 @@ export const DebtForm: React.FC<DebtFormProps> = ({
                 </div>
 
                 {formData.splitType === 'custom' && (
-                  <div className="mt-3 p-2 bg-blue-50 rounded text-sm">
+                  <div className="mt-3 p-2 bg-blue-50 dark:bg-blue-900/20 rounded text-sm">
                     <div className="flex justify-between">
-                      <span>Tổng đã chia:</span>
-                      <span className="font-semibold">
+                      <span className="text-gray-700 dark:text-gray-300">Tổng đã chia:</span>
+                      <span className="font-semibold text-gray-900 dark:text-white">
                         {(formData.customSplits?.reduce((sum, split) => sum + parseFloat(split.amount || '0'), 0) || 0).toLocaleString('vi-VN')} ₫
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span>Còn lại:</span>
-                      <span className="font-semibold">
+                      <span className="text-gray-700 dark:text-gray-300">Còn lại:</span>
+                      <span className="font-semibold text-gray-900 dark:text-white">
                         {(parseFloat(formData.totalAmount) - (formData.customSplits?.reduce((sum, split) => sum + parseFloat(split.amount || '0'), 0) || 0)).toLocaleString('vi-VN')} ₫
                       </span>
                     </div>
@@ -409,13 +409,13 @@ export const DebtForm: React.FC<DebtFormProps> = ({
         {/* New Participant Modal */}
         {showNewParticipant && (
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-md w-full p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">Thêm người tham gia mới</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Thêm người tham gia mới</h3>
                 <button
                   type="button"
                   onClick={() => setShowNewParticipant(false)}
-                  className="text-gray-500 hover:text-gray-700"
+                  className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
                 >
                   <X size={20} />
                 </button>
@@ -423,36 +423,36 @@ export const DebtForm: React.FC<DebtFormProps> = ({
               
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Tên <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     value={newParticipant.name}
                     onChange={(e) => setNewParticipant(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     placeholder="Nhập tên"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
                   <input
                     type="email"
                     value={newParticipant.email}
                     onChange={(e) => setNewParticipant(prev => ({ ...prev, email: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     placeholder="Nhập email"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Số điện thoại</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Số điện thoại</label>
                   <input
                     type="tel"
                     value={newParticipant.phone}
                     onChange={(e) => setNewParticipant(prev => ({ ...prev, phone: e.target.value }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     placeholder="Nhập số điện thoại"
                   />
                 </div>
@@ -462,7 +462,7 @@ export const DebtForm: React.FC<DebtFormProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowNewParticipant(false)}
-                  className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                  className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
                 >
                   Hủy
                 </button>
@@ -481,14 +481,14 @@ export const DebtForm: React.FC<DebtFormProps> = ({
 
         {/* Notes */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Ghi chú
           </label>
           <textarea
             value={formData.notes || ''}
             onChange={(e) => updateField('notes', e.target.value)}
             rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
             placeholder="Thêm ghi chú (không bắt buộc)"
           />
         </div>
@@ -498,7 +498,7 @@ export const DebtForm: React.FC<DebtFormProps> = ({
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+            className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
           >
             Hủy
           </button>

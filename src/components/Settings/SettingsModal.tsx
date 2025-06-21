@@ -34,12 +34,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">Cài đặt</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Cài đặt</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 p-2"
+            className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 p-2"
           >
             <X size={24} />
           </button>
@@ -49,8 +49,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           {/* Notification Settings */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <Bell size={20} className="text-blue-600" />
-              <h3 className="text-lg font-medium text-gray-900">Thông báo</h3>
+              <Bell size={20} className="text-blue-600 dark:text-blue-400" />
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white">Thông báo</h3>
             </div>
             
             <div className="space-y-3 pl-7">
@@ -65,9 +65,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       setSettings(prev => ({ ...prev, enableSystemNotifications: false }));
                     }
                   }}
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700"
                 />
-                <span className="text-gray-700">Bật thông báo hệ thống</span>
+                <span className="text-gray-700 dark:text-gray-300">Bật thông báo hệ thống</span>
               </label>
               
               <label className="flex items-center space-x-3">
@@ -75,13 +75,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   type="checkbox"
                   checked={settings.weeklyReports}
                   onChange={(e) => setSettings(prev => ({ ...prev, weeklyReports: e.target.checked }))}
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700"
                 />
-                <span className="text-gray-700">Báo cáo hàng tuần</span>
+                <span className="text-gray-700 dark:text-gray-300">Báo cáo hàng tuần</span>
               </label>
               
               <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Ngưỡng cảnh báo ngân sách (%)
                 </label>
                 <input
@@ -93,9 +93,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     ...prev, 
                     budgetWarningThreshold: parseInt(e.target.value) 
                   }))}
-                  className="w-full"
+                  className="w-full accent-blue-600"
                 />
-                <div className="flex justify-between text-sm text-gray-600">
+                <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
                   <span>50%</span>
                   <span className="font-medium">{settings.budgetWarningThreshold}%</span>
                   <span>100%</span>
@@ -107,19 +107,19 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           {/* Security Settings */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <Shield size={20} className="text-green-600" />
-              <h3 className="text-lg font-medium text-gray-900">Bảo mật</h3>
+              <Shield size={20} className="text-green-600 dark:text-green-400" />
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white">Bảo mật</h3>
             </div>
             
             <div className="space-y-3 pl-7">
-              <div className="bg-green-50 rounded-lg p-4">
+              <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
                 <div className="flex items-center space-x-2">
-                  <Database size={16} className="text-green-600" />
-                  <span className="text-sm font-medium text-green-800">
+                  <Database size={16} className="text-green-600 dark:text-green-400" />
+                  <span className="text-sm font-medium text-green-800 dark:text-green-300">
                     Dữ liệu được lưu trữ cục bộ
                   </span>
                 </div>
-                <p className="text-sm text-green-700 mt-1">
+                <p className="text-sm text-green-700 dark:text-green-400 mt-1">
                   Tất cả dữ liệu tài chính của bạn được lưu trữ an toàn trên thiết bị này.
                   Không có dữ liệu nào được gửi đến máy chủ bên ngoài.
                 </p>
@@ -130,13 +130,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           {/* Appearance Settings */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <Palette size={20} className="text-purple-600" />
-              <h3 className="text-lg font-medium text-gray-900">Giao diện</h3>
+              <Palette size={20} className="text-purple-600 dark:text-purple-400" />
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white">Giao diện</h3>
             </div>
             
             <div className="space-y-3 pl-7">
-              <div className="bg-blue-50 rounded-lg p-4">
-                <p className="text-sm text-blue-700">
+              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
+                <p className="text-sm text-blue-700 dark:text-blue-300">
                   Các tùy chọn giao diện sẽ được thêm trong các phiên bản tương lai.
                 </p>
               </div>
@@ -144,10 +144,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           </div>
         </div>
 
-        <div className="flex justify-end space-x-3 p-6 border-t border-gray-200">
+        <div className="flex justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+            className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
           >
             Hủy
           </button>
