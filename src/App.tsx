@@ -9,7 +9,9 @@ import { AnalyticsView } from './components/Analytics/AnalyticsView';
 import { ReportsView } from './components/Reports/ReportsView';
 import { SettingsModal } from './components/Settings/SettingsModal';
 import { AIAssistant } from './components/AI/AIAssistant';
+import { AuthWrapper } from './components/Auth/AuthWrapper';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { AuthProvider } from './contexts/AuthContext';
 import { Budget, Expense, AlertSettings, Debt, DebtParticipant, DebtPayment } from './types';
 import { storageUtils } from './utils/storage';
 import { notificationUtils } from './utils/notifications';
@@ -430,49 +432,53 @@ function AppContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
-      <Header
-        onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
-        onSettingsClick={() => setSettingsOpen(true)}
-        onExportClick={handleExport}
-        onImportClick={handleImport}
-      />
-      
-      <div className="flex">
-        <Sidebar
-          isOpen={sidebarOpen}
-          onClose={() => setSidebarOpen(false)}
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
+    <AuthWrapper>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
+        <Header
+          onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
+          onSettingsClick={() => setSettingsOpen(true)}
+          onExportClick={handleExport}
+          onImportClick={handleImport}
         />
         
-        <main className="flex-1 p-4 lg:p-8 lg:ml-0">
-          <div className="max-w-7xl mx-auto">
-            {renderContent()}
-          </div>
-        </main>
+        <div className="flex">
+          <Sidebar
+            isOpen={sidebarOpen}
+            onClose={() => setSidebarOpen(false)}
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+          />
+          
+          <main className="flex-1 p-4 lg:p-8 lg:ml-0">
+            <div className="max-w-7xl mx-auto">
+              {renderContent()}
+            </div>
+          </main>
+        </div>
+
+        <SettingsModal
+          isOpen={settingsOpen}
+          onClose={() => setSettingsOpen(false)}
+          alertSettings={alertSettings}
+          onUpdateSettings={handleSettingsUpdate}
+        />
+
+        <AIAssistant
+          budgets={budgets}
+          expenses={expenses}
+          debts={debts}
+        />
       </div>
-
-      <SettingsModal
-        isOpen={settingsOpen}
-        onClose={() => setSettingsOpen(false)}
-        alertSettings={alertSettings}
-        onUpdateSettings={handleSettingsUpdate}
-      />
-
-      <AIAssistant
-        budgets={budgets}
-        expenses={expenses}
-        debts={debts}
-      />
-    </div>
+    </AuthWrapper>
   );
 }
 
 function App() {
   return (
     <ThemeProvider>
-      <AppContent />
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </ThemeProvider>
   );
 }
