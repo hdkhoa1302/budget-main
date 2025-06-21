@@ -46,8 +46,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Sidebar */}
       <aside
         className={clsx(
-          'fixed left-0 top-0 h-full w-72 bg-white dark:bg-gray-900 shadow-xl transform transition-transform duration-300 ease-out z-50',
-          'lg:relative lg:translate-x-0 lg:shadow-none lg:border-r lg:border-gray-200 lg:dark:border-gray-700',
+          'fixed left-0 top-0 h-full w-80 bg-white dark:bg-gray-900 shadow-xl transform transition-transform duration-300 ease-out z-50',
+          'lg:relative lg:translate-x-0 lg:shadow-none lg:border-r lg:border-gray-200 lg:dark:border-gray-700 lg:w-72',
           {
             'translate-x-0': isOpen,
             '-translate-x-full': !isOpen,
@@ -55,7 +55,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         )}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700 lg:hidden">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200 dark:border-gray-700 lg:hidden">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
               <span className="text-white font-bold text-sm">₫</span>
@@ -64,14 +64,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors touch-manipulation"
           >
             <X size={20} className="text-gray-500 dark:text-gray-400" />
           </button>
         </div>
         
         {/* Navigation */}
-        <nav className="p-4 space-y-2">
+        <nav className="p-3 sm:p-4 space-y-1 sm:space-y-2">
           {navigation.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -84,7 +84,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   onClose();
                 }}
                 className={clsx(
-                  'w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left transition-all duration-200 group',
+                  'w-full flex items-center space-x-3 px-3 sm:px-4 py-3 sm:py-4 rounded-xl text-left transition-all duration-200 group touch-manipulation',
                   {
                     'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 shadow-sm': isActive,
                     'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white': !isActive,
@@ -94,13 +94,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <Icon 
                   size={20} 
                   className={clsx(
-                    'transition-colors',
+                    'transition-colors flex-shrink-0',
                     isActive ? item.color : 'text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300'
                   )}
                 />
-                <span className="font-medium">{item.name}</span>
+                <span className="font-medium text-base sm:text-sm">{item.name}</span>
                 {isActive && (
-                  <div className="ml-auto w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <div className="ml-auto w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
                 )}
               </button>
             );
@@ -108,7 +108,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </nav>
 
         {/* Quick Stats */}
-        <div className="p-4 mt-auto">
+        <div className="p-3 sm:p-4 mt-auto">
           <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl p-4 border border-blue-100 dark:border-blue-800/30">
             <div className="flex items-center space-x-2 mb-2">
               <TrendingUp size={16} className="text-blue-600 dark:text-blue-400" />

@@ -64,33 +64,33 @@ export const StatCard: React.FC<StatCardProps> = ({
   const colors = colorClasses[color];
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg dark:hover:shadow-gray-900/20 transition-all duration-200 group">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg dark:hover:shadow-gray-900/20 transition-all duration-200 group">
       <div className="flex items-start justify-between">
-        <div className="flex-1">
-          <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
+        <div className="flex-1 min-w-0">
+          <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 truncate">
             {title}
           </p>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+          <p className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-white mb-1 truncate">
             {formatCurrency(value)}
           </p>
           {subtitle && (
-            <p className="text-xs text-gray-500 dark:text-gray-500">
+            <p className="text-xs text-gray-500 dark:text-gray-500 truncate">
               {subtitle}
             </p>
           )}
           {trend && (
-            <div className={`flex items-center space-x-1 mt-2 text-sm ${
+            <div className={`flex items-center space-x-1 mt-2 text-xs sm:text-sm ${
               trend.direction === 'up' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
             }`}>
               <span>{trend.direction === 'up' ? '↗' : '↘'}</span>
-              <span>{Math.abs(trend.value)}%</span>
-              <span className="text-gray-500 dark:text-gray-400">vs tháng trước</span>
+              <span>{Math.abs(trend.value).toFixed(1)}%</span>
+              <span className="text-gray-500 dark:text-gray-400 hidden sm:inline">vs tháng trước</span>
             </div>
           )}
         </div>
         
-        <div className={`p-3 rounded-xl border ${colors.bg} ${colors.border} group-hover:scale-110 transition-transform duration-200`}>
-          <Icon size={24} className={colors.icon} />
+        <div className={`p-2 sm:p-3 rounded-xl border ${colors.bg} ${colors.border} group-hover:scale-110 transition-transform duration-200 flex-shrink-0`}>
+          <Icon size={20} className={`sm:w-6 sm:h-6 ${colors.icon}`} />
         </div>
       </div>
     </div>

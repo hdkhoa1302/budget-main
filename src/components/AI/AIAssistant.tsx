@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, Send, Bot, User, Loader, X, TrendingUp, PieChart, CreditCard, Lightbulb, Brain, Target, Zap } from 'lucide-react';
+import { MessageCircle, Send, Bot, User, Loader, X, TrendingUp, PieChart, CreditCard, Lightbulb, Brain, Target, Zap, Minimize2, Maximize2 } from 'lucide-react';
 import { geminiAI } from '../../services/geminiAI';
 import { Budget, Expense, Debt } from '../../types';
 
@@ -23,6 +23,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
   debts,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -238,131 +239,145 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 z-50 group"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 sm:p-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 z-50 group touch-manipulation"
       >
-        <MessageCircle size={24} />
-        <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center animate-pulse">
-          <Brain size={12} />
+        <MessageCircle size={20} className="sm:w-6 sm:h-6" />
+        <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center animate-pulse">
+          <Brain size={10} className="sm:w-3 sm:h-3" />
         </div>
       </button>
 
       {/* Chat Modal */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end justify-end p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-md h-[700px] flex flex-col">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end justify-end p-2 sm:p-4">
+          <div className={`bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-md transition-all duration-300 ${
+            isMinimized ? 'h-16' : 'h-[85vh] sm:h-[700px]'
+          } flex flex-col`}>
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-xl">
-              <div className="flex items-center space-x-3">
-                <div className="bg-white bg-opacity-20 p-2 rounded-full">
-                  <Bot size={20} />
+            <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-xl">
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <div className="bg-white bg-opacity-20 p-1.5 sm:p-2 rounded-full">
+                  <Bot size={16} className="sm:w-5 sm:h-5" />
                 </div>
                 <div>
-                  <h3 className="font-semibold">AI Financial Assistant</h3>
-                  <p className="text-sm opacity-90">Chuyên gia tài chính cá nhân</p>
+                  <h3 className="font-semibold text-sm sm:text-base">AI Financial Assistant</h3>
+                  <p className="text-xs opacity-90 hidden sm:block">Chuyên gia tài chính cá nhân</p>
                 </div>
               </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="text-white hover:bg-white hover:bg-opacity-20 p-2 rounded-lg transition-colors"
-              >
-                <X size={20} />
-              </button>
-            </div>
-
-            {/* Quick Actions */}
-            <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 font-medium">🚀 Hành động nhanh:</p>
-              <div className="grid grid-cols-2 gap-2">
-                {quickActions.map((action) => {
-                  const Icon = action.icon;
-                  return (
-                    <button
-                      key={action.id}
-                      onClick={() => handleQuickAction(action.id)}
-                      disabled={isLoading}
-                      className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-md ${action.color}`}
-                      title={action.description}
-                    >
-                      <Icon size={14} className="mx-auto mb-1" />
-                      <div className="text-center">{action.label}</div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white dark:bg-gray-800">
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`max-w-[85%] p-3 rounded-lg ${
-                      message.type === 'user'
-                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
-                        : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
-                    }`}
-                  >
-                    <div className="flex items-start space-x-2">
-                      {message.type === 'ai' && (
-                        <div className="flex-shrink-0 mt-1">
-                          {message.isLoading ? (
-                            <Loader size={16} className="text-blue-600 dark:text-blue-400 animate-spin" />
-                          ) : (
-                            <Bot size={16} className="text-blue-600 dark:text-blue-400" />
-                          )}
-                        </div>
-                      )}
-                      {message.type === 'user' && (
-                        <User size={16} className="text-white mt-1 flex-shrink-0" />
-                      )}
-                      <div className="flex-1">
-                        <div className="text-sm whitespace-pre-wrap">
-                          {formatMessageContent(message.content)}
-                        </div>
-                        <p className={`text-xs mt-2 ${
-                          message.type === 'user' ? 'text-blue-200' : 'text-gray-500 dark:text-gray-400'
-                        }`}>
-                          {message.timestamp.toLocaleTimeString('vi-VN', {
-                            hour: '2-digit',
-                            minute: '2-digit'
-                          })}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              
-              <div ref={messagesEndRef} />
-            </div>
-
-            {/* Input */}
-            <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-b-xl">
-              <div className="flex space-x-2">
-                <input
-                  type="text"
-                  value={inputMessage}
-                  onChange={(e) => setInputMessage(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                  placeholder="Hỏi về tình hình tài chính của bạn..."
-                  className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
-                  disabled={isLoading}
-                />
+              <div className="flex items-center space-x-1">
                 <button
-                  onClick={handleSendMessage}
-                  disabled={!inputMessage.trim() || isLoading}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-2 rounded-lg hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                  onClick={() => setIsMinimized(!isMinimized)}
+                  className="text-white hover:bg-white hover:bg-opacity-20 p-1.5 sm:p-2 rounded-lg transition-colors touch-manipulation"
                 >
-                  <Send size={18} />
+                  {isMinimized ? <Maximize2 size={16} /> : <Minimize2 size={16} />}
+                </button>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="text-white hover:bg-white hover:bg-opacity-20 p-1.5 sm:p-2 rounded-lg transition-colors touch-manipulation"
+                >
+                  <X size={16} className="sm:w-5 sm:h-5" />
                 </button>
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
-                💡 Hỏi về ngân sách, chi tiêu, vay nợ hoặc lời khuyên tài chính
-              </p>
             </div>
+
+            {!isMinimized && (
+              <>
+                {/* Quick Actions */}
+                <div className="p-3 sm:p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-2 sm:mb-3 font-medium">🚀 Hành động nhanh:</p>
+                  <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
+                    {quickActions.map((action) => {
+                      const Icon = action.icon;
+                      return (
+                        <button
+                          key={action.id}
+                          onClick={() => handleQuickAction(action.id)}
+                          disabled={isLoading}
+                          className={`p-2 rounded-lg text-xs font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-md ${action.color} touch-manipulation`}
+                          title={action.description}
+                        >
+                          <Icon size={12} className="sm:w-3.5 sm:h-3.5 mx-auto mb-1" />
+                          <div className="text-center leading-tight">{action.label}</div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Messages */}
+                <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 bg-white dark:bg-gray-800">
+                  {messages.map((message) => (
+                    <div
+                      key={message.id}
+                      className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div
+                        className={`max-w-[85%] p-2.5 sm:p-3 rounded-lg ${
+                          message.type === 'user'
+                            ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
+                            : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
+                        }`}
+                      >
+                        <div className="flex items-start space-x-2">
+                          {message.type === 'ai' && (
+                            <div className="flex-shrink-0 mt-0.5">
+                              {message.isLoading ? (
+                                <Loader size={14} className="text-blue-600 dark:text-blue-400 animate-spin" />
+                              ) : (
+                                <Bot size={14} className="text-blue-600 dark:text-blue-400" />
+                              )}
+                            </div>
+                          )}
+                          {message.type === 'user' && (
+                            <User size={14} className="text-white mt-0.5 flex-shrink-0" />
+                          )}
+                          <div className="flex-1">
+                            <div className="text-xs sm:text-sm whitespace-pre-wrap">
+                              {formatMessageContent(message.content)}
+                            </div>
+                            <p className={`text-xs mt-1.5 sm:mt-2 ${
+                              message.type === 'user' ? 'text-blue-200' : 'text-gray-500 dark:text-gray-400'
+                            }`}>
+                              {message.timestamp.toLocaleTimeString('vi-VN', {
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              })}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  
+                  <div ref={messagesEndRef} />
+                </div>
+
+                {/* Input */}
+                <div className="p-3 sm:p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-b-xl">
+                  <div className="flex space-x-2">
+                    <input
+                      type="text"
+                      value={inputMessage}
+                      onChange={(e) => setInputMessage(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                      placeholder="Hỏi về tình hình tài chính của bạn..."
+                      className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                      disabled={isLoading}
+                    />
+                    <button
+                      onClick={handleSendMessage}
+                      disabled={!inputMessage.trim() || isLoading}
+                      className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-2 rounded-lg hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 touch-manipulation"
+                    >
+                      <Send size={16} className="sm:w-4 sm:h-4" />
+                    </button>
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
+                    💡 Hỏi về ngân sách, chi tiêu, vay nợ hoặc lời khuyên tài chính
+                  </p>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}

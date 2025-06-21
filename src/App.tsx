@@ -416,6 +416,12 @@ function AppContent() {
     await storageUtils.saveAlertSettings(newSettings);
   };
 
+  // Quick add function for mobile
+  const handleQuickAdd = () => {
+    // Navigate to expenses tab for quick add
+    setActiveTab('expenses');
+  };
+
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
@@ -475,6 +481,7 @@ function AppContent() {
           onSettingsClick={() => setSettingsOpen(true)}
           onExportClick={handleExport}
           onImportClick={handleImport}
+          onQuickAdd={handleQuickAdd}
         />
         
         <div className="flex">
@@ -485,7 +492,7 @@ function AppContent() {
             onTabChange={setActiveTab}
           />
           
-          <main className="flex-1 p-4 lg:p-8 lg:ml-0">
+          <main className="flex-1 p-3 sm:p-4 lg:p-8 lg:ml-0">
             <div className="max-w-7xl mx-auto">
               {renderContent()}
             </div>
