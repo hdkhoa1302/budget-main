@@ -12,11 +12,13 @@ import { AIAssistant } from './components/AI/AIAssistant';
 import { AuthWrapper } from './components/Auth/AuthWrapper';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
+import { useAuth } from './contexts/AuthContext';
 import { Budget, Expense, AlertSettings, Debt, DebtParticipant, DebtPayment } from './types';
 import { storageUtils } from './utils/storage';
 import { notificationUtils } from './utils/notifications';
 
 function AppContent() {
+  const { currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -32,9 +34,33 @@ function AppContent() {
     weeklyReports: false,
   });
 
-  // Load data on mount
+  // Set current user ID for storage utils
+  useEffect(() => {
+    if (currentUser) {
+      storageUtils.setCurrentUserId(currentUser.uid);
+    } else {
+      storageUtils.setCurrentUserId(null);
+    }
+  }, [currentUser]);
+
+  // Load data when user changes or on mount
   useEffect(() => {
     const loadData = async () => {
+      if (!currentUser) {
+        // Clear data when user logs out
+        setBudgets([]);
+        setExpenses([]);
+        setDebts([]);
+        setDebtParticipants([]);
+        setDebtPayments([]);
+        setAlertSettings({
+          budgetWarningThreshold: 80,
+          enableSystemNotifications: true,
+          weeklyReports: false,
+        });
+        return;
+      }
+
       try {
         const [
           loadedBudgets,
@@ -59,12 +85,12 @@ function AppContent() {
         setDebtPayments(loadedPayments);
         setAlertSettings(loadedSettings);
       } catch (error) {
-        console.error('Error loading data:', error);
+        console.error('Error loading user data:', error);
       }
     };
 
     loadData();
-  }, []);
+  }, [currentUser]);
 
   // Get current budget
   const currentBudget = budgets.find(budget => {
@@ -304,13 +330,18 @@ function AppContent() {
 
   // Export data
   const handleExport = async () => {
+    if (!currentUser) {
+      alert('Vui lòng đăng nhập để xuất dữ liệu');
+      return;
+    }
+
     try {
       const dataStr = await storageUtils.exportData();
       const dataBlob = new Blob([dataStr], { type: 'application/json' });
       const url = URL.createObjectURL(dataBlob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `finance-tracker-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      link.download = `finance-tracker-backup-${currentUser.uid}-${new Date().toISOString().slice(0, 10)}.json`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -323,6 +354,11 @@ function AppContent() {
 
   // Import data
   const handleImport = () => {
+    if (!currentUser) {
+      alert('Vui lòng đăng nhập để nhập dữ liệu');
+      return;
+    }
+
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.json';
